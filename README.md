@@ -4,23 +4,25 @@
 
 技能名称为 `talk-in-slides`。这是一个面向 AI 编程助手的技能，也是一套可以直接编辑的静态 HTML 演示框架。先写逐页提纲，再搭页面、编排点击节奏，最后用真实浏览器截图检查。所有页面排在一张画布上，翻页时镜头移动；一页内可以分步揭示、突出重点、推近细节。
 
-![暖纸主题的 Git 教学示例](example/previews/paper.png)
+[![暖纸主题的 Git 教学示例](example/previews/paper.png)](https://seanz.github.io/talk-in-slides-skill/example/paper/)
 
 ## 先看实际效果
 
-打开仓库根目录的 [index.html](index.html)，进入七主题画廊。每套示例都是同一份「Git 不是魔法」：8 页、相同图解、相同点击节奏，只有风格不同。
+**[打开在线演示：七主题画廊](https://seanz.github.io/talk-in-slides-skill/)**
 
-| 暖纸                                                                  | 灰绿                                                                    |
-| --------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| [![暖纸](example/previews/paper.png)](example/paper/index.html)       | [![灰绿](example/previews/sage.png)](example/sage/index.html)           |
-| 冷白                                                                  | 夜场                                                                    |
-| [![冷白](example/previews/cobalt.png)](example/cobalt/index.html)     | [![夜场](example/previews/night.png)](example/night/index.html)         |
-| 终端                                                                  | 蓝图                                                                    |
-| [![终端](example/previews/terminal.png)](example/terminal/index.html) | [![蓝图](example/previews/blueprint.png)](example/blueprint/index.html) |
-| 余白                                                                  |                                                                         |
-| [![余白](example/previews/yohaku.png)](example/yohaku/index.html)     |                                                                         |
+点击下方截图即可体验对应主题的完整演示。每套示例都是同一份「Git 不是魔法」：8 页、相同图解、相同点击节奏，只有风格不同。
 
-GitHub 的文件页面展示 HTML 源码；这里的截图可直接预览。完整的镜头运动、分步和总览需要本地打开，或通过 GitHub Pages 访问。
+| 暖纸                                                                                                     | 灰绿                                                                                                       |
+| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| [![暖纸](example/previews/paper.png)](https://seanz.github.io/talk-in-slides-skill/example/paper/)       | [![灰绿](example/previews/sage.png)](https://seanz.github.io/talk-in-slides-skill/example/sage/)           |
+| 冷白                                                                                                     | 夜场                                                                                                       |
+| [![冷白](example/previews/cobalt.png)](https://seanz.github.io/talk-in-slides-skill/example/cobalt/)     | [![夜场](example/previews/night.png)](https://seanz.github.io/talk-in-slides-skill/example/night/)         |
+| 终端                                                                                                     | 蓝图                                                                                                       |
+| [![终端](example/previews/terminal.png)](https://seanz.github.io/talk-in-slides-skill/example/terminal/) | [![蓝图](example/previews/blueprint.png)](https://seanz.github.io/talk-in-slides-skill/example/blueprint/) |
+| 余白                                                                                                     |                                                                                                            |
+| [![余白](example/previews/yohaku.png)](https://seanz.github.io/talk-in-slides-skill/example/yohaku/)     |                                                                                                            |
+
+在线演示支持镜头运动、分步揭示、总览与演讲者视图。下载仓库后，也可在本地打开 [index.html](index.html) 进入画廊；GitHub 文件页面中的 HTML 仅用于查看源码。
 
 ## 安装为技能
 
@@ -106,11 +108,11 @@ npm run test:browser
 
 ## 发布到 GitHub Pages
 
-先创建自己的仓库并推送。在 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，再手动运行仓库中的 **Deploy examples** 工作流。此工作流只由手动操作触发，修改主分支不会自动发布。
+本仓库的在线演示入口为 [七主题画廊](https://seanz.github.io/talk-in-slides-skill/)。如需发布自己的副本，先创建自己的仓库并推送。在 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，再手动运行仓库中的 **Deploy examples** 工作流。此工作流只由手动操作触发，修改主分支不会自动发布。
 
 工作流会执行 `npm run site`，把画廊、七套示例和运行所需静态资源复制到 `_site/`，再部署到 Pages。不会把检查报告、代理文档、依赖目录或本地配置上传到站点。部署成功后，GitHub Actions 会给出真实访问地址，可以放进仓库的 About / Website 字段。
 
-本地可先运行 `npm run site`，再在 `_site/` 下启动静态服务检查。当前仓库不预设用户名、远端地址或自定义域名。
+本地可先运行 `npm run site`，再在 `_site/` 下启动静态服务检查。站点资源采用相对路径；发布自己的副本后，将 README 中的在线演示链接替换为实际 Pages 地址。
 
 配置方式见 [GitHub Pages 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)。
 
