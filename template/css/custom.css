@@ -1,0 +1,60 @@
+/* 本 deck 专属样式：只放某一页才用到的东西，通用的放进 deck.css。 */
+
+/* 01 封面图：SVG 缩放到约 0.7 倍显示，标签相应放大到实际 18px 以上 */
+.cover-art .d-label {
+  font-size: 27px;
+}
+
+/* 03 镜头示意：取景框从 01 飞到 04 */
+.cam-diagram .viewfinder {
+  transition: transform 1.6s var(--ease);
+}
+.cam-diagram .viewfinder.go {
+  transform: translateX(690px);
+}
+
+/* 10 屏幕框里的示意界面（真实 deck 用 <img>/<video> 替换） */
+.mock {
+  aspect-ratio: 16 / 9;
+  padding: 64px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  background: var(--paper);
+}
+.mock > div,
+.mock-cards span {
+  border-radius: 8px;
+  background: var(--sunk);
+}
+.mock-kicker {
+  width: 120px;
+  height: 14px;
+  background: var(--accent) !important;
+  opacity: 0.8;
+}
+.mock-h {
+  width: 78%;
+  height: 44px;
+  background: var(--ink) !important;
+  opacity: 0.85;
+}
+.mock-h.short {
+  width: 46%;
+}
+.mock-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: auto;
+  background: none !important;
+}
+.mock-cards span {
+  height: 150px;
+  border: 1px solid var(--rule);
+  background: var(--card);
+}
+.mock-cards .on-acc {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+}

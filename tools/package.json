@@ -1,0 +1,17 @@
+{
+  "name": "talk-in-slides-tools",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "playwright-core": "1.64.0"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "shoot": "node shoot.mjs",
+    "test:browser": "node --test test/browser.integration.mjs",
+    "check": "node ../scripts/check.mjs && prettier --ignore-path ../.prettierignore --config ../.prettierrc.json --check .."
+  },
+  "devDependencies": {
+    "prettier": "3.9.8"
+  }
+}

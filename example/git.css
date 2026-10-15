@@ -1,0 +1,62 @@
+/* Git 教学示例：各主题共用几何与内容，颜色继承主题 token。 */
+.git-graph {
+  width: 100%;
+  max-height: 430px;
+}
+.frame .git-graph .d-title {
+  font-size: 34px;
+}
+.frame .git-graph .d-label {
+  font-size: 34px;
+}
+.frame .cover-graph .d-title {
+  font-size: 42px;
+}
+.frame .cover-graph .d-label {
+  font-size: 27px;
+  letter-spacing: 0;
+}
+/* 页面控制保持屏幕字号，手机竖屏下仍可点击。 */
+.gallery-link {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 18px;
+  z-index: 100;
+  color: var(--ink-2);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 9px 12px;
+  font: 14px var(--sans);
+  text-decoration: none;
+}
+.gallery-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.paused .gallery-link {
+  visibility: hidden;
+}
+@media print {
+  .gallery-link {
+    display: none;
+  }
+}
+
+/* 旧提交改用虚线保留可读性，便于在最终态和 PDF 中比较。 */
+.superseded .d-box,
+.superseded .d-line {
+  stroke-dasharray: 8 8;
+  stroke: var(--ink-3);
+}
+
+/* 缩放后仍保留图解的线条层级，深色主题也能看清历史关系。 */
+.frame .git-graph .d-line {
+  stroke-width: 2.5;
+}
+.frame .git-graph .d-box {
+  stroke-width: 2;
+}
+.frame .git-graph .d-acc {
+  stroke-width: 3.5;
+}

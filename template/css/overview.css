@@ -1,0 +1,128 @@
+/* ================= 总览（M） ================= */
+.overview .frame {
+  cursor: pointer;
+  overflow: visible;
+  transition:
+    transform 1.3s var(--ease),
+    opacity 0.5s,
+    visibility 0s 0.5s; /* 滑入和镜头同一条曲线、同一时长；淡出后再隐藏，免得潜入时还在栅格化 */
+}
+.overview-leaving .frame:not(.focus) {
+  opacity: 0;
+  visibility: hidden;
+}
+.overview .frame > * {
+  pointer-events: none;
+}
+/* 缩略图不加框：页面和画布同一张纸，靠对齐和页名成格；只有选中页在页外留一圈强调色框，不压住内容 */
+/* 选中框：画在页外 34px、26px 宽的强调色圆角框，不压内容也不加光晕。
+   线宽是画布像素，总览里会随页数一起缩放 */
+.overview .frame::after {
+  content: "";
+  position: absolute;
+  inset: -34px;
+  border: 0 solid var(--accent);
+  border-radius: 18px;
+  pointer-events: none;
+  transition: border-width 0.25s var(--ease-out);
+}
+.overview .frame.sel::after {
+  border-width: 26px;
+}
+.overview-leaving .frame.sel::after {
+  border-width: 0;
+}
+.overview .frame-label {
+  display: block;
+  position: absolute;
+  top: 1140px;
+  left: 0;
+  right: 0;
+  font: 400 100px/1.12 var(--serif);
+  color: var(--ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-ligatures: none; /* 页名是标识符，fi/fl 不连写 */
+  animation: ov-label 0s 0.7s both; /* 飞行中不出现，免得压在别的页上。用 visibility 直接切换而不是淡入：淡入会把 18 个页名各提成一层，镜头缩放时逐帧重新栅格化 */
+}
+.overview-leaving .frame-label {
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+@keyframes ov-label {
+  from {
+    visibility: hidden;
+  }
+  to {
+    visibility: visible;
+  }
+}
+.overview .frame-label b {
+  margin-right: 30px;
+  font: 500 88px/1 var(--mono);
+  color: var(--accent-text);
+}
+.overview .frame.sel .frame-label {
+  color: var(--ink);
+}
+.overview #chrome .run,
+.overview #chrome .rule {
+  opacity: 0;
+}
+#navhud {
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  transform: translate(-50%, 16px);
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  max-width: 1400px;
+  padding: 18px 34px 20px;
+  border: 1px solid var(--rule-2);
+  background: var(--card);
+  color: var(--ink);
+  opacity: 0;
+  transition:
+    opacity 0.35s,
+    transform 0.35s var(--ease-out);
+  z-index: 30;
+  pointer-events: none;
+  white-space: nowrap;
+}
+#navhud b {
+  font: 500 30px/1 var(--mono);
+  color: var(--accent-text);
+}
+#navhud span {
+  min-width: 0;
+  font: 400 30px/1.2 var(--serif);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#navhud em {
+  font: 500 14px/1 var(--sans);
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.overview #navhud {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.overview-leaving #navhud {
+  opacity: 0;
+}
+
+@media print {
+  #grain {
+    display: none;
+  }
+}
+:lang(zh) .quote-text::before,
+:lang(zh) .quote-text::after {
+  font-family: "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+}

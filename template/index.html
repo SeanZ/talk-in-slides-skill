@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="paper">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>把演示做成一部短片 · talk-in-slides 示例</title>
+    <link rel="stylesheet" href="vendor/reveal/reveal.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/deck.css" />
+    <link rel="stylesheet" href="css/skins.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+  <body>
+    <div class="reveal"><div class="slides"></div></div>
+
+    <div id="stage">
+      <div id="world">
+        <!-- 01 封面 -->
+        <div class="frame" id="cover" data-chrome="off">
+          <div class="l-cover">
+            <div class="text">
+              <p class="kicker rise" data-in="0">talk-in-slides · 示例 deck</p>
+              <h1 class="h1 rise" data-in="0" data-max-lines="3" style="--d: 0.15s">把演示做成一部==短片==，而不是一叠幻灯片</h1>
+              <p class="lede rise" data-in="0" data-max-lines="2" style="--d: 0.35s">
+                一张长画布、一台会飞的相机、每一次点击只多说一件事。
+              </p>
+              <div class="byline rise" data-in="0" style="--d: 0.55s"><span>示例讲者</span><span class="when">演示示例</span></div>
+            </div>
+            <div class="art">
+              <svg class="pen cover-art" data-in="0" style="--d: 0.3s" viewBox="0 0 760 640" aria-hidden="true">
+                <rect class="d-box hatch" x="20" y="30" width="330" height="186" rx="16" />
+                <rect class="d-inner" x="32" y="42" width="306" height="162" rx="9" />
+                <rect class="d-box" x="215" y="210" width="330" height="186" rx="16" />
+                <rect class="d-inner" x="227" y="222" width="306" height="162" rx="9" />
+                <rect class="d-box" x="410" y="390" width="330" height="186" rx="16" />
+                <rect class="d-inner" x="422" y="402" width="306" height="162" rx="9" />
+                <path class="d-acc" d="M185 123 C 260 160, 300 250, 380 303 S 520 420, 575 483" marker-end="url(#arrow-acc)" />
+                <path class="d-acc" d="M196 192 h-26 v26 M564 192 h26 v26 M196 414 h-26 v-26 M564 414 h26 v-26" stroke-width="3" />
+                <text class="d-label" x="20" y="256">FRAME 01</text>
+                <text class="d-label acc" x="400" y="180">CAMERA</text>
+                <text class="d-label" x="575" y="618" text-anchor="middle">FRAME 03</text>
+              </svg>
+            </div>
+          </div>
+          <aside class="notes">开场一句话：今天不讲"做 PPT"，讲怎么把一份演示做成一部短片。封面上的三个画框就是整个方法。</aside>
+        </div>
+
+        <!-- 02 章节页 -->
+        <div class="frame" id="part1" data-part="一 · 画布">
+          <div class="l-section">
+            <div class="numeral" aria-hidden="true">01</div>
+            <p class="kicker rise" data-in="0">第一部分</p>
+            <h1 class="h1 rise" data-in="0" style="--d: 0.15s">一张画布，一台相机</h1>
+            <p class="lede rise" data-in="0" style="--d: 0.35s">所有页面摆在同一张长纸上。翻页时纸不动，镜头在动。</p>
+          </div>
+        </div>
+
+        <!-- 03 左文右图 + 分步 + 镜头推近 -->
+        <div class="frame" id="camera" data-cam="0,0,1; 0,0,1; 400,120,1.7">
+          <div class="pad">
+            <div class="split">
+              <div class="stack gap-m">
+                <p class="kicker rise" data-in="0">镜头</p>
+                <h2 class="h2 rise" data-in="0" data-max-lines="3" style="--d: 0.12s">翻页不是换页，是==镜头移动==</h2>
+                <p class="body rise" data-in="0" style="--d: 0.28s">
+                  相邻两页之间平移；跨度很大时，镜头先拉远再推近，观众始终知道自己在哪。
+                </p>
+                <p class="source rise" data-in="0" style="--d: 0.4s">data-cam="dx,dy,z; …" 每步一组</p>
+              </div>
+              <div class="art">
+                <svg viewBox="0 0 900 640" aria-hidden="true" class="cam-diagram">
+                  <g class="rise" data-in="0" style="--d: 0.2s">
+                    <rect class="d-box" x="10" y="80" width="200" height="112" rx="12" />
+                    <rect class="d-box" x="240" y="80" width="200" height="112" rx="12" />
+                    <rect class="d-box hatch" x="470" y="80" width="200" height="112" rx="12" />
+                    <rect class="d-box" x="700" y="80" width="190" height="112" rx="12" />
+                    <text class="d-label" x="110" y="232" text-anchor="middle">01</text>
+                    <text class="d-label" x="340" y="232" text-anchor="middle">02</text>
+                    <text class="d-label" x="570" y="232" text-anchor="middle">03</text>
+                    <text class="d-label" x="795" y="232" text-anchor="middle">04</text>
+                  </g>
+                  <g class="viewfinder" data-state="go@1">
+                    <path class="d-acc" stroke-width="3.5" d="M0 102 V68 H34 M220 102 V68 H186 M0 170 V204 H34 M220 170 V204 H186" />
+                  </g>
+                  <g class="pen" data-in="1">
+                    <path class="d-line dash" d="M110 300 H 795" />
+                    <path class="d-acc" d="M110 300 C 250 300, 300 520, 452 520 S 655 300, 795 300" marker-end="url(#arrow-acc)" />
+                    <text class="d-label" x="110" y="350" text-anchor="middle">z = 1</text>
+                    <text class="d-label acc" x="452" y="570" text-anchor="middle">z = 0.6 · 抬高镜头</text>
+                    <text class="d-label" x="795" y="350" text-anchor="middle">z = 1</text>
+                  </g>
+                  <g class="pop" data-in="2">
+                    <circle class="d-acc" cx="452" cy="520" r="16" />
+                    <text class="d-text" x="452" y="616" text-anchor="middle">同一页里也能推近：这一步就是</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            第一下：镜头框从 01 飞到 04，下面画出它的路径——远距离会先拉远。第二下：同一页里推近到路径上，演示 data-cam。
+          </aside>
+        </div>
+
+        <!-- 04 卡片：每步一张 -->
+        <div class="frame" id="steps">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">节奏</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">每一次点击，只多说一件事</h2>
+            </div>
+            <div class="cols-3 grow-1">
+              <div class="card rise" data-in="1" data-state="dim@2-4">
+                <span class="idx">01 · 断言</span>
+                <h3 class="h3">标题是一句完整的判断</h3>
+                <p class="body">读完标题就知道这页的结论，正文只负责证明。</p>
+              </div>
+              <div class="card rise" data-in="2" data-state="dim@3-4">
+                <span class="idx">02 · 证据</span>
+                <h3 class="h3">一页只放一个证据</h3>
+                <p class="body">一个数字、一张图、一段录屏，选最有力的那个。</p>
+              </div>
+              <div class="card ink rise" data-in="3">
+                <span class="idx">03 · 余味</span>
+                <h3 class="h3">最后一步留给"所以呢"</h3>
+                <p class="body">把观众该带走的那句话，放在最后一下点击里。</p>
+              </div>
+            </div>
+            <p class="lede rise" data-in="4">最后一下恢复全部：三张卡合起来，就是一页的结构。</p>
+          </div>
+          <aside class="notes">三下点击，各说一张卡。已经讲过的卡变暗，视线自然落在新内容上。第四下恢复全部并收束成一句话。</aside>
+        </div>
+
+        <!-- 05 大数字 -->
+        <div class="frame" id="stat">
+          <div class="pad">
+            <div class="stat-split">
+              <div class="stat-big rise" data-in="0">
+                <span data-count="0" data-from="0" data-to="115">115</span><span class="unit">ms</span>
+              </div>
+              <div class="side rise" data-in="0" style="--d: 0.25s">
+                <p class="kicker">一个数字撑起一页</p>
+                <h2 class="h2" data-max-lines="2">数字要大到不用找</h2>
+                <p class="body">进入这一页时数字会从 0 滚到目标值；倒退或跳页时直接显示终值，不会乱跳。</p>
+                <p class="source">示例数据 · 来源与口径写在这一行</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06 图表：柱子生长 + 高亮 -->
+        <div class="frame" id="chart">
+          <div class="pad gap-l">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">图表</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">先让柱子长出来，再告诉观众看哪一根</h2>
+            </div>
+            <div class="chart-row grow-1">
+              <div class="chart">
+                <svg viewBox="0 0 1220 470">
+                  <line class="grid" x1="0" x2="1220" y1="110" y2="110" />
+                  <line class="grid" x1="0" x2="1220" y1="250" y2="250" />
+                  <line class="axis" x1="0" x2="1220" y1="390" y2="390" />
+                  <g data-stagger="110" data-in="0" data-motion="grow">
+                    <rect class="bar outline" x="40" y="290" width="180" height="100" />
+                    <rect class="bar outline" x="280" y="230" width="180" height="160" />
+                    <rect class="bar outline" x="520" y="200" width="180" height="190" />
+                    <rect class="bar" x="760" y="70" width="180" height="320" data-state="lit@1" />
+                    <rect class="bar outline" x="1000" y="180" width="180" height="210" />
+                  </g>
+                  <g class="rise" data-in="0" style="--d: 0.7s">
+                    <text class="val" x="130" y="270" text-anchor="middle">12</text>
+                    <text class="val" x="370" y="210" text-anchor="middle">19</text>
+                    <text class="val" x="610" y="180" text-anchor="middle">23</text>
+                    <text class="val" x="850" y="50" text-anchor="middle" data-state="lit@1">41</text>
+                    <text class="val" x="1090" y="160" text-anchor="middle">26</text>
+                    <text class="cat" x="130" y="432" text-anchor="middle">纯文字</text>
+                    <text class="cat" x="370" y="432" text-anchor="middle">配图</text>
+                    <text class="cat" x="610" y="432" text-anchor="middle">图表</text>
+                    <text class="cat" x="850" y="432" text-anchor="middle">分步揭示</text>
+                    <text class="cat" x="1090" y="432" text-anchor="middle">录屏</text>
+                  </g>
+                </svg>
+              </div>
+              <div class="aside rise" data-in="1">
+                <p class="label">最高</p>
+                <p class="big">41%</p>
+                <p class="text">分步揭示的记忆度最高：观众只需要跟上一个新信息。</p>
+              </div>
+            </div>
+            <p class="source rise" data-in="0" style="--d: 0.9s">示例数据 · 单位 % · 来源行用 .source</p>
+          </div>
+        </div>
+
+        <!-- 07 表格 -->
+        <div class="frame" id="table">
+          <div class="pad gap-l">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">对照</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">网页做演示，赢在可以==动==</h2>
+            </div>
+            <table class="table rise" data-in="0" style="--d: 0.3s">
+              <thead>
+                <tr>
+                  <th>能力</th>
+                  <th>传统幻灯片</th>
+                  <th>talk-in-slides</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>翻页</td>
+                  <td>换一张图</td>
+                  <td>镜头在一张画布上飞</td>
+                </tr>
+                <tr data-state="hi@1">
+                  <td>分步揭示</td>
+                  <td>逐项出现</td>
+                  <td>状态由（页，步）决定，可倒退可跳转</td>
+                </tr>
+                <tr>
+                  <td>录屏与动画</td>
+                  <td>嵌入视频</td>
+                  <td>到那一步才从头播放，离开即暂停</td>
+                </tr>
+                <tr>
+                  <td>分发</td>
+                  <td>发文件</td>
+                  <td>一个链接，手机上也能点着看</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 08 代码：逐行高亮 -->
+        <div class="frame" id="code">
+          <div class="pad">
+            <div class="split even">
+              <div class="stack gap-m">
+                <p class="kicker rise" data-in="0">写法</p>
+                <h2 class="h2 rise" data-in="0" data-max-lines="3" style="--d: 0.12s">动效只写一个属性</h2>
+                <p class="body rise" data-in="0" style="--d: 0.28s">元素声明自己"第几步出现"，引擎负责其余一切。</p>
+              </div>
+              <pre
+                class="code rise"
+                data-in="0"
+                style="--d: 0.3s"
+              ><span class="ln" data-state="lit@1-2"><span class="c">&lt;!-- 第 0 步就在 --&gt;</span></span><span class="ln" data-state="lit@1-2">&lt;h2 class="h2 rise" <span class="k">data-in</span>=<span class="s">"0"</span>&gt;</span><span class="ln"></span><span class="ln" data-state="lit@2-3"><span class="c">&lt;!-- 第 1 步出现 --&gt;</span></span><span class="ln" data-state="lit@2-3">&lt;div class="card pop" <span class="k">data-in</span>=<span class="s">"1"</span>&gt;</span><span class="ln"></span><span class="ln" data-state="lit@3"><span class="c">&lt;!-- 第 2 步起变暗 --&gt;</span></span><span class="ln" data-state="lit@3">&lt;p <span class="k">data-state</span>=<span class="s">"dim@2"</span>&gt;</span></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 09 引语 -->
+        <div class="frame" id="quote" data-part="二 · 质感">
+          <div class="pad" style="justify-content: center; padding-right: 160px">
+            <p class="quote-text blur" data-in="0" data-max-lines="3">质感不是加出来的，是一样一样拿掉之后剩下的。</p>
+            <p class="cite rise" data-in="0" style="--d: 0.6s; margin-top: 56px">示例引语 <span>替换成真实出处</span></p>
+          </div>
+        </div>
+
+        <!-- 10 屏幕框 -->
+        <div class="frame" id="media">
+          <div class="pad">
+            <div class="split rev">
+              <div>
+                <div class="screen zoom" data-in="0" style="--d: 0.15s">
+                  <div class="bar"><i></i><i></i><i></i><span class="url">localhost:8000/#/3</span></div>
+                  <div class="view mock">
+                    <div class="mock-kicker"></div>
+                    <div class="mock-h"></div>
+                    <div class="mock-h short"></div>
+                    <div class="mock-cards"><span></span><span></span><span class="on-acc"></span></div>
+                  </div>
+                </div>
+                <p class="caption rise" data-in="0" style="--d: 0.5s">
+                  <span class="label">图 1</span>把 &lt;img&gt; 或 &lt;video&gt; 放进 .screen 即可
+                </p>
+              </div>
+              <div class="stack gap-m">
+                <p class="kicker rise" data-in="0">录屏</p>
+                <h2 class="h2 rise" data-in="0" data-max-lines="3" style="--d: 0.12s">真实画面比任何形容词都有说服力</h2>
+                <p class="body rise" data-in="0" style="--d: 0.28s">视频到它出现的那一步才从头播放，离开这一页就暂停并回到开头。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11 时间线 -->
+        <div class="frame" id="workflow">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">流程</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">先写稿，再搭页，最后才是动效</h2>
+            </div>
+            <div class="fill-center">
+              <div class="timeline">
+                <svg class="track pen" data-in="0" style="--d: 0.3s" viewBox="0 0 1680 40" preserveAspectRatio="none">
+                  <line class="d-line" x1="0" y1="10" x2="1680" y2="10" />
+                </svg>
+                <div class="node rise" data-in="0" style="--d: 0.5s" data-state="lit@1">
+                  <span class="when">01</span>
+                  <h3 class="h3">写稿</h3>
+                  <p class="small">每页一句断言，先在纸上过一遍</p>
+                </div>
+                <div class="node rise" data-in="0" style="--d: 0.6s" data-state="lit@1">
+                  <span class="when">02</span>
+                  <h3 class="h3">搭页</h3>
+                  <p class="small">从版式库里挑，不发明新版式</p>
+                </div>
+                <div class="node rise" data-in="0" style="--d: 0.7s" data-state="lit@1">
+                  <span class="when">03</span>
+                  <h3 class="h3">编排</h3>
+                  <p class="small">决定每一下点击揭示什么</p>
+                </div>
+                <div class="node rise" data-in="0" style="--d: 0.8s">
+                  <span class="when">04</span>
+                  <h3 class="h3">检查</h3>
+                  <p class="small">截图、lint、逐页评审</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12 收尾 -->
+        <div class="frame" id="close" data-chrome="off">
+          <div class="l-close">
+            <div>
+              <p class="kicker rise" data-in="0">谢谢</p>
+              <h1 class="h1 rise" data-in="0" data-max-lines="3" style="--d: 0.15s">按 M 看全部页面，按 S 打开演讲者视图</h1>
+            </div>
+            <div class="contact rise" data-in="0" style="--d: 0.4s"><span>you@example.com</span><span>example.com/deck</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="grain"></div>
+      <div id="chrome">
+        <div class="run top"><span>把演示做成一部短片</span><span id="part"></span></div>
+        <div class="rule top"></div>
+        <div class="rule bot"><div id="progress"></div></div>
+        <div class="run bot"><span>示例讲者 · talk-in-slides</span><span id="folio"></span></div>
+        <button id="navbtn" type="button" title="全部页面（M）" aria-label="全部页面">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <rect x="1" y="1" width="7" height="7" rx="1" />
+            <rect x="12" y="1" width="7" height="7" rx="1" />
+            <rect x="1" y="12" width="7" height="7" rx="1" />
+            <rect x="12" y="12" width="7" height="7" rx="1" />
+          </svg>
+        </button>
+      </div>
+      <div id="navhud"></div>
+    </div>
+
+    <!-- 全局 SVG 定义：斜线填充、箭头。在任何内联 SVG 里用 url(#hatch) / marker-end="url(#arrow)" -->
+    <svg class="defs" aria-hidden="true">
+      <defs>
+        <pattern id="hatch" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="11" />
+        </pattern>
+        <pattern id="hatch-acc" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="11" />
+        </pattern>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 Z" />
+        </marker>
+        <marker id="arrow-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 Z" />
+        </marker>
+        <marker id="arrow-dim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 Z" />
+        </marker>
+      </defs>
+    </svg>
+
+    <script src="vendor/reveal/reveal.js"></script>
+    <script src="vendor/reveal/plugin/notes.js"></script>
+    <script src="js/typeset.js"></script>
+    <script src="js/engine.js"></script>
+  </body>
+</html>

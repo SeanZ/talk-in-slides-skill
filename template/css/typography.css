@@ -1,0 +1,391 @@
+/* ================= 排版 ================= */
+.frame {
+  font-family: var(--sans);
+  color: var(--ink);
+  text-autospace: normal;
+  text-spacing-trim: trim-start;
+  line-break: strict;
+}
+.h1,
+.h2,
+.h3,
+.display {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-variation-settings:
+    "SOFT" 30,
+    "WONK" 0;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0;
+  text-wrap: balance;
+}
+.h1 {
+  font-size: 104px;
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+}
+.h2 {
+  font-size: 72px;
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+}
+.h3 {
+  font-size: 42px;
+  line-height: 1.18;
+  letter-spacing: -0.012em;
+}
+.kicker {
+  font: 600 20px/1.2 var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.kicker::before {
+  content: "";
+  width: 32px;
+  height: 1.5px;
+  background: var(--accent);
+  flex: none;
+} /* 强调色只给短横，留给结论 */
+.lede {
+  font: 400 34px/1.45 var(--sans);
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 30em;
+  text-wrap: pretty;
+}
+.body {
+  font: 400 28px/1.55 var(--sans);
+  color: var(--ink-2);
+  margin: 0;
+  text-wrap: pretty;
+}
+.small {
+  font: 400 22px/1.5 var(--sans);
+  color: var(--ink-2);
+  margin: 0;
+}
+.note {
+  font: 400 20px/1.5 var(--sans);
+  color: var(--ink-3);
+  margin: 0;
+}
+.frame code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+} /* 正文里的行内代码 */
+.num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.source {
+  font: 400 18px/1.5 var(--mono);
+  color: var(--ink-3);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+.label {
+  font: 500 18px/1.2 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.em {
+  font-style: italic;
+  color: var(--accent);
+}
+.ink {
+  color: var(--ink) !important;
+}
+.muted {
+  color: var(--ink-3) !important;
+}
+.accent {
+  color: var(--accent) !important;
+}
+.second {
+  color: var(--second) !important;
+}
+/* 中文：衬线标题加粗一档、行距放宽、不用斜体 */
+:lang(zh) .h1 {
+  font-size: 96px;
+  line-height: 1.22;
+  letter-spacing: 0.005em;
+  font-weight: 600;
+}
+:lang(zh) .h2 {
+  font-size: 66px;
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+:lang(zh) .h3 {
+  font-size: 40px;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+:lang(zh) .kicker {
+  font-size: 22px;
+  letter-spacing: 0.14em;
+}
+:lang(zh) .lede {
+  font-size: 32px;
+  line-height: 1.7;
+  max-width: 26em;
+}
+:lang(zh) .body {
+  font-size: 27px;
+  line-height: 1.75;
+}
+:lang(zh) .small {
+  line-height: 1.65;
+}
+:lang(zh) :is(.em, .stat-big .unit, .code .c, .chart .anno, .cite) {
+  font-style: normal;
+}
+/* 中文标题优先在标点处断行，放不下才强制断；需要额外断点就插 <wbr> */
+:lang(zh) :is(.h1, .h2, .h3, .quote-text) {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.cjk-punct {
+  font-family: "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", "PingFang SC", serif;
+}
+:is(.body, .lede, .small, .note, .list, .table, .caption) .cjk-punct {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+}
+
+/* ================= 布局原语 ================= */
+.pad {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  top: 150px;
+  bottom: 150px;
+  display: flex;
+  flex-direction: column;
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.row {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+.grow-1 {
+  flex: 1;
+  min-height: 0;
+}
+.mt-auto {
+  margin-top: auto;
+}
+.fill-center {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+} /* 在标题下方剩余空间里垂直居中 */
+.center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.center .kicker {
+  justify-content: center;
+}
+.cols-2,
+.cols-3,
+.cols-4 {
+  display: grid;
+  gap: 40px;
+}
+.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.split {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 96px;
+  align-items: center;
+  height: 100%;
+}
+.split.even {
+  grid-template-columns: 1fr 1fr;
+}
+.split.rev {
+  grid-template-columns: 7fr 5fr;
+}
+.gap-s {
+  gap: 16px;
+}
+.gap-m {
+  gap: 32px;
+}
+.gap-l {
+  gap: 56px;
+}
+.gap-xl {
+  gap: 88px;
+}
+.hr {
+  height: 1px;
+  background: var(--rule);
+  border: 0;
+  margin: 0;
+}
+
+/* ================= 版式 ================= */
+/* 封面：左文右图，署名压底 */
+.l-cover {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 72px;
+  align-items: center;
+  position: absolute;
+  inset: 120px 120px 110px;
+}
+.l-cover .h1 {
+  margin: 34px 0 36px;
+}
+.l-cover .byline {
+  display: flex;
+  gap: 28px;
+  align-items: baseline;
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+  font: 500 22px/1.3 var(--sans);
+  color: var(--ink);
+}
+.l-cover .byline .when {
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+}
+.l-cover .art svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* 章节页：巨大斜体序号 + 一句话 */
+.l-section {
+  position: absolute;
+  inset: 150px 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.l-section .numeral {
+  position: absolute;
+  right: -20px;
+  bottom: -90px;
+  font: italic 300 640px/1 var(--serif);
+  color: var(--ink);
+  opacity: 0.06;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+}
+.l-section .h1 {
+  max-width: 13em;
+  margin-top: 28px;
+}
+.l-section .lede {
+  margin-top: 36px;
+}
+:lang(zh) .l-section .h1 {
+  max-width: 11em;
+}
+/* 断言句：只有一句话，留白当主角 */
+.l-statement {
+  position: absolute;
+  inset: 150px 240px 150px 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+.l-statement .h1 {
+  font-size: 112px;
+}
+:lang(zh) .l-statement .h1 {
+  font-size: 100px;
+}
+/* 大数字 */
+.stat-big {
+  font: 300 300px/0.9 var(--serif);
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-variation-settings:
+    "SOFT" 0,
+    "WONK" 0;
+  white-space: nowrap;
+}
+.stat-big > span {
+  display: inline-block;
+} /* 盒子高度 = 行高，等宽字体的大数字才不会被 lint 判成和下方文字重叠 */
+.stat-big .unit {
+  font-size: 0.38em;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-left: 0.06em;
+  color: var(--ink-3);
+} /* 正体：斜体 × 会被看成字母 x */
+.stat-big.accent {
+  color: var(--accent);
+}
+/* 大数字 | 竖线 | 说明：杂志式数字页 */
+.stat-split {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 88px;
+  align-items: center;
+  height: 100%;
+}
+.stat-split .stat-big {
+  font-size: 340px;
+  padding-left: 8px;
+}
+.stat-split .side {
+  border-left: 1.5px solid var(--ink);
+  padding-left: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.stat-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 56px;
+}
+.stat-row .stat-big {
+  font-size: 168px;
+}
+.stat-row .item {
+  border-top: 1.5px solid var(--ink);
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}

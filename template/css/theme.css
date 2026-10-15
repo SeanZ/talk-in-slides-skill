@@ -1,0 +1,109 @@
+/* talk-in-slides 主题：字体与色彩 token。
+   换主题只改 <html data-theme="...">：paper（默认，暖纸 + 朱红）、sage（鼠尾草 + 墨绿）、cobalt（冷白 + 钴蓝）、night（深底 + 琥珀）。
+   规则：一个强调色（--accent）是画面里唯一的亮色；--second 只用于"问题/对照"，一页最多出现一次。
+   字体全部本地托管（fonts/，SIL OFL 1.1），拉丁字符走 Fraunces/Inter/JetBrains Mono，中文落到系统字体。 */
+
+@font-face {
+  font-family: "Fraunces";
+  src: url(../fonts/fraunces-normal.woff2) format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+0000-024F, U+2000-206F, U+20AC, U+2122, U+2190-2199, U+2212;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url(../fonts/fraunces-italic.woff2) format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: block;
+  unicode-range: U+0000-024F, U+2000-206F, U+20AC, U+2122, U+2190-2199, U+2212;
+}
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/inter.woff2) format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+0000-024F, U+2000-206F, U+20AC, U+2122, U+2190-2199, U+2212;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url(../fonts/jetbrains-mono.woff2) format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: block;
+}
+
+:root {
+  --serif: "Fraunces", "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", "Noto Serif SC", STSong, serif;
+  --sans: "Inter", "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", Menlo, "PingFang SC", monospace;
+
+  --ease: cubic-bezier(0.65, 0, 0.35, 1); /* 镜头、位移：两头慢 */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* 入场：快起缓停 */
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* .pop：轻微回弹 */
+}
+
+/* paper：暖纸、近黑墨、朱红强调 */
+:root,
+[data-theme="paper"] {
+  --paper: #f3f0e8;
+  --card: #faf8f3;
+  --sunk: #ebe7dc;
+  --ink: #171613;
+  --ink-2: #4a4841;
+  --ink-3: #8a867b;
+  --rule: #dcd6c8;
+  --rule-2: #c4bdac;
+  --accent: #c8491d;
+  --accent-text: #a23a14;
+  --accent-tint: #f2dccd;
+  --second: #2f5d8a;
+  --second-tint: #dbe5ef;
+}
+[data-theme="sage"] {
+  --paper: #eef0ea;
+  --card: #f8f9f5;
+  --sunk: #e3e7de;
+  --ink: #0f120f;
+  --ink-2: #464c46;
+  --ink-3: #7e847d;
+  --rule: #d3d8cf;
+  --rule-2: #bcc3b8;
+  --accent: #1f7a45;
+  --accent-text: #1a6339;
+  --accent-tint: #d7e8da;
+  --second: #8a2f2b;
+  --second-tint: #efdcda;
+}
+[data-theme="cobalt"] {
+  --paper: #f4f3ef;
+  --card: #fbfbf8;
+  --sunk: #e9e8e2;
+  --ink: #111318;
+  --ink-2: #474a52;
+  --ink-3: #82858c;
+  --rule: #d9d9d3;
+  --rule-2: #c2c2bb;
+  --accent: #2a4bd7;
+  --accent-text: #2340b8;
+  --accent-tint: #dfe4fa;
+  --second: #c8491d;
+  --second-tint: #f6ddd0;
+}
+[data-theme="night"] {
+  --paper: #121314;
+  --card: #1b1c1e;
+  --sunk: #0c0d0e;
+  --ink: #ecebe6;
+  --ink-2: #b4b2aa;
+  --ink-3: #7c7a73;
+  --rule: #2c2d30;
+  --rule-2: #3d3e42;
+  --accent: #f0b24a;
+  --accent-text: #f0b24a;
+  --accent-tint: #3a2f1c;
+  --second: #7fb3e8;
+  --second-tint: #1d2a38;
+}

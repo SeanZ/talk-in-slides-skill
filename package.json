@@ -1,0 +1,15 @@
+{
+  "name": "talk-in-slides",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "面向技术分享、讲座和课程的静态网页演示技能",
+  "scripts": {
+    "examples": "node scripts/build-examples.mjs",
+    "check": "npm --prefix tools run check",
+    "test": "npm --prefix tools test",
+    "test:browser": "npm run site && npm --prefix tools run test:browser",
+    "screenshots": "node scripts/screenshots.mjs",
+    "site": "node scripts/build-site.mjs"
+  }
+}

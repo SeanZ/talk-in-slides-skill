@@ -1,0 +1,17 @@
+**/vendor/**
+**/fonts/**
+node_modules/
+**/node_modules/**
+shots/
+**/shots/**
+_site/
+.artifacts/
+example/paper/
+example/sage/
+example/cobalt/
+example/night/
+example/terminal/
+example/blueprint/
+example/yohaku/
+
+/index.html

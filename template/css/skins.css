@@ -1,0 +1,571 @@
+/* talk-in-slides 皮肤：在默认的编辑排版风之外，换一套字体、笔触和底纹。
+   用法：<html data-skin="terminal" | "blueprint" | "yohaku">；不写就是默认风格。
+   明暗由 data-theme 决定：night 是深色版（终端、蓝图推荐深色；余白推荐浅色 paper），其余主题都是浅色版。
+   皮肤只覆盖 token、字体和少量组件外观，版式、动效、lint 全部复用。 */
+
+/* ================= terminal：等宽、方角、点阵网格、磷光绿 ================= */
+[data-skin="terminal"] {
+  --paper: #f3f4f0;
+  --card: #fafaf7;
+  --sunk: #e8eae4;
+  --ink: #14181a;
+  --ink-2: #474d4a;
+  --ink-3: #828a85;
+  --rule: #d9ddd6;
+  --rule-2: #c0c6bd;
+  --accent: #0f8f4e;
+  --accent-text: #0c7540;
+  --accent-tint: #d7eedf;
+  --second: #b8541c;
+  --second-tint: #f3e0d2;
+}
+[data-skin="terminal"][data-theme="night"] {
+  --paper: #0b0e0c;
+  --card: #121714;
+  --sunk: #060807;
+  --ink: #dde3da;
+  --ink-2: #a7b1a4;
+  --ink-3: #6f7a6e;
+  --rule: #233028;
+  --rule-2: #334536;
+  --accent: #5ee38a;
+  --accent-text: #5ee38a;
+  --accent-tint: #15301f;
+  --second: #f0b24a;
+  --second-tint: #3a2f1c;
+}
+/* 点阵网格铺满整张画布，总览里也连续 */
+[data-skin="terminal"] #world {
+  background-image: radial-gradient(color-mix(in srgb, var(--rule-2) 70%, transparent) 1.2px, transparent 1.2px);
+  background-size: 48px 48px;
+  background-position: 24px 24px;
+}
+/* 标题、大数字、引语全部等宽；等宽字体偏宽，字号相应收小 */
+[data-skin="terminal"] .h1,
+[data-skin="terminal"] .h2,
+[data-skin="terminal"] .h3,
+[data-skin="terminal"] .display,
+[data-skin="terminal"] .stat-big,
+[data-skin="terminal"] .quote-text,
+[data-skin="terminal"] .aside .big,
+[data-skin="terminal"] .aside .text,
+[data-skin="terminal"] .chart .val,
+[data-skin="terminal"] .chart .anno,
+[data-skin="terminal"] svg .d-title,
+[data-skin="terminal"] .l-section .numeral {
+  font-family: var(--mono);
+  font-style: normal;
+  font-variation-settings: normal;
+}
+[data-skin="terminal"] .h1 {
+  font-size: 88px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+[data-skin="terminal"] .h2 {
+  font-size: 60px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+[data-skin="terminal"] .h3 {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+[data-skin="terminal"] .stat-big {
+  font-weight: 500;
+  letter-spacing: -0.06em;
+}
+[data-skin="terminal"] .quote-text {
+  font-weight: 500;
+  font-size: 54px;
+  line-height: 1.4;
+}
+[data-skin="terminal"] .l-section .numeral {
+  font-weight: 600;
+  font-size: 520px;
+  letter-spacing: -0.06em;
+  opacity: 0.07;
+}
+[data-skin="terminal"] svg .d-title {
+  font-size: 28px;
+  font-weight: 600;
+}
+[data-skin="terminal"] .chart .anno,
+[data-skin="terminal"] .aside .text {
+  font-size: 24px;
+}
+/* 提示符当 kicker 的前缀 */
+[data-skin="terminal"] .kicker {
+  font-family: var(--mono);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+[data-skin="terminal"] .kicker::before {
+  content: ">";
+  width: auto;
+  height: auto;
+  background: none;
+  color: var(--accent);
+}
+[data-skin="terminal"] #chrome .run,
+[data-skin="terminal"] #navhud span,
+[data-skin="terminal"] .table th,
+[data-skin="terminal"] .list .t,
+[data-skin="terminal"] .frame-label {
+  font-family: var(--mono);
+}
+/* 一律方角、细线、无阴影 */
+[data-skin="terminal"] .card,
+[data-skin="terminal"] .chip,
+[data-skin="terminal"] .screen,
+[data-skin="terminal"] .screen .bar .url,
+[data-skin="terminal"].overview .frame::after,
+[data-skin="terminal"] #navhud,
+[data-skin="terminal"] .phone {
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-skin="terminal"] .phone {
+  border-radius: 24px;
+}
+[data-skin="terminal"] .code,
+[data-skin="blueprint"] .code {
+  border-radius: 0;
+}
+/* 等宽字体的空格有 0.6em，标题里"数字 单位"之间会像断开，收紧词距 */
+[data-skin="terminal"] .h1,
+[data-skin="terminal"] .h2,
+[data-skin="terminal"] .h3,
+[data-skin="terminal"] .stat-big {
+  word-spacing: -0.22em;
+}
+[data-skin="terminal"] .card {
+  border-color: var(--rule-2);
+}
+[data-skin="terminal"] .card.ink {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+[data-skin="terminal"] .card.ink .h3,
+[data-skin="terminal"] .card.ink .body,
+[data-skin="terminal"] .card.ink .small {
+  color: var(--ink);
+}
+[data-skin="terminal"] svg .d-box,
+[data-skin="terminal"] svg .d-pill {
+  rx: 0;
+  stroke-width: 1.2;
+}
+[data-skin="terminal"] svg .d-box.ink,
+[data-skin="terminal"] .chart .bar {
+  fill: var(--accent-tint);
+  stroke: var(--accent);
+}
+[data-skin="terminal"] .d-box.ink + .d-title,
+[data-skin="terminal"] svg .on-ink {
+  fill: var(--ink);
+}
+[data-skin="terminal"] .chart .bar.soft {
+  fill: var(--rule-2);
+  stroke: none;
+}
+[data-skin="terminal"] .chart .bar.outline {
+  fill: var(--card);
+  stroke: var(--ink-2);
+}
+[data-skin="terminal"] .chart .bar.hatch {
+  fill: url(#hatch);
+  stroke: var(--ink-2);
+}
+
+/* ================= blueprint：制图蓝底、白色细线、坐标纸、黄色标注 ================= */
+[data-skin="blueprint"] {
+  --paper: #f6f7f3;
+  --card: #fcfcfa;
+  --sunk: #eceee8;
+  --ink: #1b3f8a;
+  --ink-2: #3d5a96;
+  --ink-3: #7f93bf;
+  --rule: #d2dbec;
+  --rule-2: #b7c5e2;
+  --accent: #d9480f;
+  --accent-text: #c23f0c;
+  --accent-tint: #fbe1d3;
+  --second: #1f8a4c;
+  --second-tint: #d6ecdd;
+}
+[data-skin="blueprint"][data-theme="night"] {
+  --paper: #123a7b;
+  --card: #174386;
+  --sunk: #0d2d63;
+  --ink: #f4f7ff;
+  --ink-2: #cdd9f3;
+  --ink-3: #8ea6d8;
+  --rule: #2e58a8;
+  --rule-2: #4470bd;
+  --accent: #ffcf5c;
+  --accent-text: #ffcf5c;
+  --accent-tint: #3c5a8f;
+  --second: #ff8f86;
+  --second-tint: #5a4580;
+}
+/* 坐标纸：细格 40px，粗格 200px，和页面间距 2200 对齐 */
+[data-skin="blueprint"] #world {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--rule-2) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--rule-2) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--rule) 60%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--rule) 60%, transparent) 1px, transparent 1px);
+  background-size:
+    200px 200px,
+    200px 200px,
+    40px 40px,
+    40px 40px;
+}
+/* 每页一圈图纸边框 */
+[data-skin="blueprint"] .frame::before {
+  content: "";
+  position: absolute;
+  inset: 36px;
+  border: 1px solid var(--rule-2);
+  pointer-events: none;
+}
+/* 标题用无衬线中粗，标签和数字用等宽：工程制图的字 */
+[data-skin="blueprint"] .h1,
+[data-skin="blueprint"] .h2,
+[data-skin="blueprint"] .h3,
+[data-skin="blueprint"] .display,
+[data-skin="blueprint"] .quote-text,
+[data-skin="blueprint"] .aside .text,
+[data-skin="blueprint"] .chart .anno,
+[data-skin="blueprint"] svg .d-title {
+  font-family: var(--sans);
+  font-style: normal;
+  font-variation-settings: normal;
+  font-weight: 600;
+}
+[data-skin="blueprint"] .h1 {
+  font-size: 96px;
+  letter-spacing: -0.02em;
+}
+[data-skin="blueprint"] .h2 {
+  font-size: 66px;
+  letter-spacing: -0.018em;
+}
+[data-skin="blueprint"] .h3 {
+  font-size: 38px;
+  letter-spacing: -0.01em;
+}
+[data-skin="blueprint"] .quote-text {
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.35;
+}
+[data-skin="blueprint"] .chart .anno,
+[data-skin="blueprint"] .aside .text {
+  font-weight: 400;
+  font-size: 25px;
+}
+[data-skin="blueprint"] svg .d-title {
+  font-size: 30px;
+}
+[data-skin="blueprint"] .stat-big,
+[data-skin="blueprint"] .aside .big,
+[data-skin="blueprint"] .chart .val,
+[data-skin="blueprint"] .l-section .numeral {
+  font-family: var(--mono);
+  font-style: normal;
+  font-weight: 300;
+  font-variation-settings: normal;
+}
+[data-skin="blueprint"] .l-section .numeral {
+  font-size: 560px;
+  letter-spacing: -0.05em;
+  opacity: 0.09;
+}
+[data-skin="blueprint"] .kicker,
+[data-skin="blueprint"] #chrome .run,
+[data-skin="blueprint"] #navhud span,
+[data-skin="blueprint"] .table th,
+[data-skin="blueprint"] .frame-label {
+  font-family: var(--mono);
+  font-weight: 500;
+}
+/* 方角、细线、无阴影；卡片透底只留线框 */
+[data-skin="blueprint"] .card,
+[data-skin="blueprint"] .chip,
+[data-skin="blueprint"] .screen,
+[data-skin="blueprint"] .screen .bar .url,
+[data-skin="blueprint"] #navhud,
+[data-skin="blueprint"].overview .frame::after {
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-skin="blueprint"] .phone {
+  border-radius: 24px;
+  box-shadow: none;
+}
+[data-skin="blueprint"] .card {
+  background: none;
+  border-color: var(--ink-3);
+}
+[data-skin="blueprint"] .card.tint,
+[data-skin="blueprint"] .card.ink {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+[data-skin="blueprint"] .card.ink .h3,
+[data-skin="blueprint"] .card.ink .body,
+[data-skin="blueprint"] .card.ink .small {
+  color: var(--ink);
+}
+[data-skin="blueprint"] svg .d-box,
+[data-skin="blueprint"] svg .d-pill {
+  rx: 0;
+  fill: none;
+  stroke-width: 1.2;
+}
+[data-skin="blueprint"] svg .d-box.ink {
+  fill: var(--ink);
+}
+[data-skin="blueprint"] svg .d-box.tint {
+  fill: var(--accent-tint);
+}
+[data-skin="blueprint"] svg .d-box.hatch {
+  fill: url(#hatch);
+}
+[data-skin="blueprint"] svg .d-inner {
+  stroke: var(--ink-3);
+  stroke-dasharray: 3 5;
+}
+[data-skin="blueprint"] .chart .bar {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+[data-skin="blueprint"] .chart .bar.soft {
+  fill: var(--rule-2);
+  stroke: none;
+}
+
+/* ================= yohaku：日式极简 / 余白。和纸底、墨字、朱色一点、细线、宽字距、大留白 ================= */
+[data-skin="yohaku"] {
+  --paper: #f1eee7;
+  --card: #f7f5f0;
+  --sunk: #e6e2d8;
+  --ink: #1f1e1b;
+  --ink-2: #5a5852;
+  --ink-3: #99958c;
+  --rule: #dcd7cb;
+  --rule-2: #c7c1b2;
+  --accent: #bf3b2b;
+  --accent-text: #a8321f;
+  --accent-tint: #f0ddd7;
+  --second: #2f4e7a;
+  --second-tint: #dde4ee;
+}
+[data-skin="yohaku"][data-theme="night"] {
+  --paper: #17181a;
+  --card: #1e1f22;
+  --sunk: #0f1012;
+  --ink: #ebe7df;
+  --ink-2: #b5b0a6;
+  --ink-3: #78746c;
+  --rule: #2a2b2e;
+  --rule-2: #3b3c40;
+  --accent: #d9553f;
+  --accent-text: #d9553f;
+  --accent-tint: #3a251f;
+  --second: #7f9fc7;
+  --second-tint: #1e2a3a;
+}
+/* 和纸颗粒 */
+[data-skin="yohaku"] #grain {
+  display: block;
+  opacity: 0.22;
+}
+/* 留白更大：安全区向内收，纵向间距放大 */
+[data-skin="yohaku"] .pad {
+  left: 180px;
+  right: 180px;
+  top: 170px;
+  bottom: 170px;
+}
+[data-skin="yohaku"] .l-cover,
+[data-skin="yohaku"] .l-section,
+[data-skin="yohaku"] .l-close {
+  inset: 170px 180px;
+}
+[data-skin="yohaku"] .l-statement {
+  inset: 170px 300px 170px 180px;
+}
+[data-skin="yohaku"] #chrome .run,
+[data-skin="yohaku"] #chrome .rule {
+  left: 180px;
+  right: 180px;
+}
+[data-skin="yohaku"] .stack {
+  gap: 36px;
+}
+/* 字：标题细宋体、宽字距；正文行距放到 1.9 */
+[data-skin="yohaku"] .h1,
+[data-skin="yohaku"] .h2,
+[data-skin="yohaku"] .h3,
+[data-skin="yohaku"] .display,
+[data-skin="yohaku"] .quote-text,
+[data-skin="yohaku"] svg .d-title {
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  font-variation-settings:
+    "SOFT" 100,
+    "WONK" 0;
+}
+[data-skin="yohaku"] .h1 {
+  font-size: 84px;
+  line-height: 1.3;
+}
+[data-skin="yohaku"] .h2 {
+  font-size: 56px;
+  line-height: 1.35;
+}
+[data-skin="yohaku"] .h3 {
+  font-size: 32px;
+  line-height: 1.5;
+}
+[data-skin="yohaku"] .lede {
+  font-size: 30px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+[data-skin="yohaku"] .body,
+[data-skin="yohaku"] .small,
+[data-skin="yohaku"] .note,
+[data-skin="yohaku"] .list .t small,
+[data-skin="yohaku"] .card .body {
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+[data-skin="yohaku"] .quote-text,
+[data-skin="yohaku"] :lang(zh) .quote-text {
+  font-size: 56px;
+  font-weight: 300;
+  line-height: 1.8;
+  text-indent: 0;
+}
+[data-skin="yohaku"] .quote-text::before {
+  content: "「";
+  letter-spacing: 0;
+}
+[data-skin="yohaku"] .quote-text::after {
+  content: "」";
+  letter-spacing: 0;
+}
+[data-skin="yohaku"] .stat-big {
+  font-weight: 200;
+  letter-spacing: -0.02em;
+}
+[data-skin="yohaku"] .l-section .numeral {
+  font-weight: 200;
+  font-style: normal;
+  opacity: 0.05;
+}
+/* kicker：一枚朱色小方印代替短横，字距拉开 */
+[data-skin="yohaku"] .kicker {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  color: var(--ink-3);
+}
+[data-skin="yohaku"] .kicker::before {
+  width: 9px;
+  height: 9px;
+}
+[data-skin="yohaku"] #chrome .run,
+[data-skin="yohaku"] .label,
+[data-skin="yohaku"] .table th {
+  letter-spacing: 0.28em;
+  font-weight: 500;
+}
+/* 竖排小字：封面署名、章节页的侧注可用 */
+[data-skin="yohaku"] .tate {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.3em;
+}
+/* 组件：去掉框和底，只留一根细线和空白 */
+[data-skin="yohaku"] .card {
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--ink);
+  border-radius: 0;
+  padding: 32px 0 0;
+}
+[data-skin="yohaku"] .card.ink,
+[data-skin="yohaku"] .card.tint {
+  border: 0;
+  padding: 40px 44px 44px;
+}
+[data-skin="yohaku"] .card.ink {
+  background: var(--ink);
+}
+[data-skin="yohaku"] .card.tint {
+  background: var(--accent-tint);
+}
+[data-skin="yohaku"] .card .idx {
+  margin-bottom: 0; /* 没有框体时标题不再沉底，否则序号和标题之间会留出一个空洞 */
+}
+[data-skin="yohaku"] .card.ghost {
+  border-top: 1px dashed var(--rule-2);
+}
+[data-skin="yohaku"] .chip,
+[data-skin="yohaku"] .screen,
+[data-skin="yohaku"] .screen .bar .url,
+[data-skin="yohaku"] .code,
+[data-skin="yohaku"] #navhud,
+[data-skin="yohaku"].overview .frame::after {
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-skin="yohaku"] .phone {
+  border-radius: 40px;
+  box-shadow: none;
+}
+[data-skin="yohaku"] .table th {
+  border-bottom-width: 1px;
+}
+[data-skin="yohaku"] .stat-row .item,
+[data-skin="yohaku"] .chart-row .aside {
+  border-width: 1px;
+}
+/* 图解：细线、方角、不填底。安全区变窄后 SVG 会缩小约 7%，小标签字号相应放大 */
+[data-skin="yohaku"] svg :where(.d-label),
+[data-skin="yohaku"] .chart :where(.tick) {
+  font-size: 21px; /* :where 压低优先级，custom.css 里按页放大的规则仍然有效 */
+}
+[data-skin="yohaku"] svg .d-box,
+[data-skin="yohaku"] svg .d-pill {
+  rx: 0;
+  fill: none;
+  stroke-width: 1;
+}
+[data-skin="yohaku"] svg .d-box.ink {
+  fill: var(--ink);
+}
+[data-skin="yohaku"] svg .d-box.tint {
+  fill: var(--accent-tint);
+}
+[data-skin="yohaku"] svg .d-box.hatch {
+  fill: url(#hatch);
+}
+[data-skin="yohaku"] svg .d-line,
+[data-skin="yohaku"] .chart .axis,
+[data-skin="yohaku"] .chart .bar.outline {
+  stroke-width: 1;
+}
+[data-skin="yohaku"] svg .d-acc,
+[data-skin="yohaku"] .chart .line {
+  stroke-width: 1.5;
+}

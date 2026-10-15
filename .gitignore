@@ -1,0 +1,9 @@
+node_modules/
+shots/
+.artifacts/
+_site/
+.DS_Store
+*.log
+.env
+.env.*
+.agentdocs/

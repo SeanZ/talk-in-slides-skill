@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="night" data-skin="blueprint">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Git 不是魔法 · talk-in-slides</title>
+    <link rel="stylesheet" href="../../template/vendor/reveal/reveal.css" />
+    <link rel="stylesheet" href="../../template/css/theme.css" />
+    <link rel="stylesheet" href="../../template/css/deck.css" />
+    <link rel="stylesheet" href="../../template/css/skins.css" />
+    <link rel="stylesheet" href="../git.css" />
+  </head>
+  <body>
+    <div class="reveal"><div class="slides"></div></div>
+
+    <div id="stage">
+      <div id="world">
+        <div class="frame" id="cover" data-chrome="off" data-part="开场">
+          <div class="l-cover">
+            <div class="text">
+              <p class="kicker rise" data-in="0">技术分享 · Git 协作入门</p>
+              <h1 class="h1 rise" data-in="0" data-max-lines="3" style="--d: 0.15s">Git 不是魔法，<br />先看懂<br />==历史怎么走==</h1>
+              <p class="lede rise" data-in="0" style="--d: 0.35s">从对象和指针，走到分支与合并。</p>
+              <div class="byline rise" data-in="0"><span>talk-in-slides</span><span class="when">公开教学示例 · 合成图解</span></div>
+            </div>
+            <div class="art rise" data-in="0" style="--d: 0.3s">
+              <svg class="cover-graph pen" data-in="0" viewBox="0 0 760 650" role="img" aria-label="Git 对象关系示意">
+                <path class="d-line" d="M120 140 H610 M270 140 C350 140 330 400 430 400 H610" />
+                <circle class="d-box" cx="120" cy="140" r="30" />
+                <circle class="d-box" cx="270" cy="140" r="30" />
+                <circle class="d-box" cx="610" cy="140" r="30" />
+                <circle class="d-box tint" cx="430" cy="400" r="30" />
+                <circle class="d-box tint" cx="610" cy="400" r="30" />
+                <text class="d-title" x="120" y="75">main</text>
+                <text class="d-title" x="420" y="495">feature</text>
+                <path class="d-acc" d="M610 360 V180" marker-end="url(#arrow-acc)" />
+                <text class="d-label" x="120" y="590">OBJECTS → POINTERS → HISTORY</text>
+              </svg>
+            </div>
+          </div>
+          <aside class="notes">
+            这份示例延续“用对象和指针理解 Git”的教学主线。所有节点都是合成标识，不对应任何真实项目。这是通用协作原理，不是 Gitflow 的
+            release/develop 分支规范。
+          </aside>
+        </div>
+
+        <div class="frame" id="objects" data-part="一 · 对象">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">一 · 对象</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">四种对象，各管一件事</h2>
+            </div>
+            <div class="cols-4 grow-1">
+              <div class="card rise" data-in="1" data-state="dim@2-5">
+                <span class="idx">01 · 文件内容</span>
+                <h3 class="h3 mono">blob</h3>
+                <p class="body">保存内容，不保存文件名。</p>
+              </div>
+              <div class="card rise" data-in="2" data-state="dim@3-5">
+                <span class="idx">02 · 目录结构</span>
+                <h3 class="h3 mono">tree</h3>
+                <p class="body">记录名字、模式与对象引用。</p>
+              </div>
+              <div class="card rise" data-in="3" data-state="dim@4-5">
+                <span class="idx">03 · 一次快照</span>
+                <h3 class="h3 mono">commit</h3>
+                <p class="body">关联根 tree、父提交与元数据。</p>
+              </div>
+              <div class="card rise" data-in="4" data-state="dim@5-5">
+                <span class="idx">04 · 附注标签</span>
+                <h3 class="h3 mono">tag</h3>
+                <p class="body">保存目标、说明与打标者信息。</p>
+              </div>
+            </div>
+            <p class="source">概念依据：Pro Git · Git Objects；轻量标签只是引用，不创建 tag 对象。</p>
+          </div>
+          <aside class="notes">
+            逐一揭示四类对象。commit 的父提交可为零个、一个或多个；根提交没有父提交。附注标签可以带签名，签名不是必需条件。
+          </aside>
+        </div>
+
+        <div class="frame" id="snapshot">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">快照</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">提交指向快照，差异按需计算</h2>
+            </div>
+            <div class="fill-center">
+              <svg class="git-graph" viewBox="0 0 1560 430" role="img" aria-label="Git 对象关系示意">
+                <rect class="d-box" x="40" y="155" width="280" height="120" rx="12" />
+                <text class="d-title" x="180" y="225" text-anchor="middle">commit</text>
+                <rect class="d-box" x="600" y="155" width="280" height="120" rx="12" />
+                <text class="d-title" x="740" y="225" text-anchor="middle">tree</text>
+                <rect class="d-box" x="1160" y="155" width="280" height="120" rx="12" />
+                <text class="d-title" x="1300" y="225" text-anchor="middle">blob</text>
+                <path class="d-line" d="M325 215 H590 M885 215 H1150" marker-end="url(#arrow)" />
+                <text class="d-label" x="1010" y="150" text-anchor="middle">hello.txt</text>
+              </svg>
+            </div>
+            <p class="body rise" data-in="1">文件名写在 tree 里；内容没有变化，就能复用同一个 blob。</p>
+            <p class="source">关系示意，省略父提交与元数据；依据：Pro Git · Git Objects。</p>
+          </div>
+          <aside class="notes">
+            图上的连线表示对象引用。Git 的逻辑模型保存快照，展示 diff
+            时比较快照；底层打包可能采用差量压缩。不要把逻辑快照和磁盘上完整复制混为一谈。
+          </aside>
+        </div>
+
+        <div class="frame" id="branch" data-part="二 · 指针">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">二 · 指针</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">新建分支，只增加一个指针</h2>
+            </div>
+            <div class="split even grow-1">
+              <div class="stack gap-l">
+                <p class="body rise" data-in="0">两个分支可以指向同一次提交。<br />分支名不同，文件不必复制一份。</p>
+                <pre class="code rise" data-in="2"><span class="ln">git switch -c feature</span></pre>
+                <p class="note rise" data-in="2">正常附着状态下，HEAD 指向当前分支。</p>
+              </div>
+              <div class="art">
+                <svg class="git-graph" viewBox="0 0 820 450" role="img" aria-label="Git 对象关系示意">
+                  <path class="d-line" d="M180 210 L590 210" />
+                  <circle class="d-box" cx="180" cy="210" r="42" />
+                  <text class="d-title" x="180" y="220" text-anchor="middle">A</text>
+                  <circle class="d-box" cx="590" cy="210" r="42" />
+                  <text class="d-title" x="590" y="220" text-anchor="middle">B</text>
+                  <g class="rise" data-in="1">
+                    <rect class="d-pill" x="460" y="55" width="260" height="60" rx="30" />
+                    <text class="d-title" x="590" y="96" text-anchor="middle">main</text>
+                    <path class="d-line" d="M590 115 V164" />
+                  </g>
+                  <g class="rise" data-in="2">
+                    <rect class="d-box tint" x="460" y="335" width="260" height="65" rx="12" />
+                    <text class="d-title" x="590" y="378" text-anchor="middle">feature</text>
+                    <path class="d-acc" d="M590 333 V256" />
+                    <text class="d-label" x="210" y="378">HEAD →</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <p class="source">A、B 为合成提交标识；依据：Pro Git · Branches in a Nutshell。</p>
+          </div>
+          <aside class="notes">
+            先给出提交 A、B，再让 main 指向 B；执行 switch -c 创建 feature 并切换，HEAD 于是指向 feature。detached HEAD
+            是例外，不在本页展开。
+          </aside>
+        </div>
+
+        <div class="frame" id="merge" data-part="三 · 整合">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">三 · 整合</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">分叉之后，merge 保留两条来路</h2>
+            </div>
+            <div class="fill-center">
+              <svg class="git-graph" viewBox="0 0 1560 430" role="img" aria-label="Git 对象关系示意">
+                <path class="d-line" d="M180 210 L560 210" />
+                <path class="d-line" d="M560 210 L920 110" />
+                <path class="d-line" d="M560 210 L920 340" />
+                <circle class="d-box" cx="180" cy="210" r="42" />
+                <text class="d-title" x="180" y="220" text-anchor="middle">A</text>
+                <circle class="d-box" cx="560" cy="210" r="42" />
+                <text class="d-title" x="560" y="220" text-anchor="middle">B</text>
+                <circle class="d-box" cx="920" cy="110" r="42" />
+                <text class="d-title" x="920" y="120" text-anchor="middle">C</text>
+                <circle class="d-box" cx="920" cy="340" r="42" />
+                <text class="d-title" x="920" y="350" text-anchor="middle">D</text>
+                <text class="d-label" x="920" y="40" text-anchor="middle" data-out="1" data-in="0">main</text>
+                <text class="d-label" x="920" y="420" text-anchor="middle">feature</text>
+                <g class="rise" data-in="1">
+                  <path class="d-acc" d="M965 110 L1350 110" />
+                  <path class="d-acc" d="M965 340 L1350 110" />
+                  <circle class="d-box tint" cx="1395" cy="110" r="42" />
+                  <text class="d-title" x="1395" y="120" text-anchor="middle">M</text>
+                  <text class="d-label acc" x="1395" y="40" text-anchor="middle">main</text>
+                </g>
+              </svg>
+            </div>
+            <p class="body rise" data-in="1">M 同时引用 C 和 D，已有提交保持不变。</p>
+            <p class="source">连线表示历史关系，时间从左到右；演示非 fast-forward 的双分支合并。</p>
+          </div>
+          <aside class="notes">
+            这里历史已经分叉。合并产生两个父提交的新 commit M，main 前进到 M，feature 仍指向 D。若目标能直接快进，默认 merge
+            不必创建合并提交；不能概括成每次 merge 都产生新节点。
+          </aside>
+        </div>
+
+        <div class="frame" id="rebase">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">重放</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">rebase 重放改动，形成新的提交</h2>
+            </div>
+            <div class="fill-center">
+              <svg class="git-graph" viewBox="0 0 1560 430" role="img" aria-label="Git 对象关系示意">
+                <path class="d-line" d="M180 180 L520 180" />
+                <path class="d-line" d="M520 180 L860 180" />
+                <circle class="d-box" cx="180" cy="180" r="42" />
+                <text class="d-title" x="180" y="190" text-anchor="middle">A</text>
+                <circle class="d-box" cx="520" cy="180" r="42" />
+                <text class="d-title" x="520" y="190" text-anchor="middle">B</text>
+                <circle class="d-box" cx="860" cy="180" r="42" />
+                <text class="d-title" x="860" y="190" text-anchor="middle">C</text>
+                <text class="d-label" x="860" y="95" text-anchor="middle">main</text>
+                <g data-state="superseded@1">
+                  <path class="d-line" d="M520 180 L860 360" />
+                  <circle class="d-box" cx="860" cy="360" r="42" />
+                  <text class="d-title" x="860" y="370" text-anchor="middle">D</text>
+                </g>
+                <g class="rise" data-in="1">
+                  <path class="d-acc" d="M905 180 L1295 180" />
+                  <circle class="d-box tint" cx="1340" cy="180" r="42" />
+                  <text class="d-title" x="1340" y="190" text-anchor="middle">D′</text>
+                  <text class="d-label acc" x="1340" y="95" text-anchor="middle">feature</text>
+                </g>
+              </svg>
+            </div>
+            <p class="body rise" data-in="1">D 的改动应用到 C 之后，得到 D′；父提交改变，标识随之改变。</p>
+            <p class="source">关系为合成示意；原 D 仍可能由 reflog 等引用保留，不会因重放立即消失。</p>
+          </div>
+          <aside class="notes">
+            在 feature 上执行 git rebase main。示例假设改动成功重放且不是空提交。旧 D 没有瞬间移动到新位置；新 D′
+            有不同的父提交。不要擅自改写其他人正在依赖的共享历史。
+          </aside>
+        </div>
+
+        <div class="frame" id="choose">
+          <div class="pad gap-xl">
+            <div class="stack">
+              <p class="kicker rise" data-in="0">协作选择</p>
+              <h2 class="h2 rise" data-in="0" data-max-lines="2" style="--d: 0.12s">先约定历史，再选择整合方式</h2>
+            </div>
+            <table class="table rise" data-in="0">
+              <thead>
+                <tr>
+                  <th>需要保留什么</th>
+                  <th>可选方式</th>
+                  <th>先检查什么</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-state="hi@1-2">
+                  <td>分支整合的来路</td>
+                  <td><span class="mono">merge</span></td>
+                  <td>是否已分叉、是否需要合并节点</td>
+                </tr>
+                <tr data-state="hi@2">
+                  <td>线性的个人提交</td>
+                  <td><span class="mono">rebase</span></td>
+                  <td>是否有人依赖这段历史</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="body rise" data-in="2">两条路径可能得到相同文件内容；冲突处理不同，结果也可能不同。</p>
+            <p class="source">依据：Pro Git · Basic Branching and Merging / Rebasing。</p>
+          </div>
+          <aside class="notes">
+            按行说明适用条件。merge 和 rebase 并不保证任何情况下都得到相同 tree。实际团队还会使用 squash
+            等策略，应在评审和发布约定中明确，不靠个人习惯随意切换。
+          </aside>
+        </div>
+
+        <div class="frame" id="close" data-chrome="off" data-part="行动">
+          <div class="l-close">
+            <div>
+              <p class="kicker rise" data-in="0">下次敲命令之前</p>
+              <h1 class="h1 rise" data-in="0" data-max-lines="3" style="--d: 0.15s">
+                它新增了什么对象，<br />又把哪个指针<br />==移到了哪里？==
+              </h1>
+              <p class="lede rise" data-in="1">用对象图解释一次提交，再解释一次合并。</p>
+            </div>
+            <div class="contact rise" data-in="0"><span>talk-in-slides · 公开教学示例</span><span>← / → 翻页 · M 总览 · S 备注</span></div>
+          </div>
+          <aside class="notes">
+            收尾可现场演示 git cat-file -p HEAD 与 git log --oneline --graph。所有主题使用同一叙事、图形和步数；返回画廊可以比较其他主题。
+          </aside>
+        </div>
+      </div>
+      <div id="grain"></div>
+      <div id="chrome">
+        <div class="run top"><span>Git 不是魔法</span><span id="part"></span></div>
+        <div class="rule top"></div>
+        <div class="rule bot"><div id="progress"></div></div>
+        <div class="run bot"><span>talk-in-slides · 教学示例</span><span id="folio"></span></div>
+        <button id="navbtn" type="button" title="全部页面（M）" aria-label="全部页面">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <rect x="1" y="1" width="7" height="7" rx="1" />
+            <rect x="12" y="1" width="7" height="7" rx="1" />
+            <rect x="1" y="12" width="7" height="7" rx="1" />
+            <rect x="12" y="12" width="7" height="7" rx="1" />
+          </svg>
+        </button>
+      </div>
+      <div id="navhud"></div>
+    </div>
+
+    <!-- 全局 SVG 定义：斜线填充、箭头。在任何内联 SVG 里用 url(#hatch) / marker-end="url(#arrow)" -->
+    <svg class="defs" aria-hidden="true">
+      <defs>
+        <pattern id="hatch" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="11" />
+        </pattern>
+        <pattern id="hatch-acc" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="11" />
+        </pattern>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 Z" />
+        </marker>
+        <marker id="arrow-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 Z" />
+        </marker>
+        <marker id="arrow-dim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10 Z" />
+        </marker>
+      </defs>
+    </svg>
+
+    <script src="../../template/vendor/reveal/reveal.js"></script>
+    <script src="../../template/vendor/reveal/plugin/notes.js"></script>
+    <script src="../../template/js/typeset.js"></script>
+    <script src="../../template/js/engine.js"></script>
+    <a class="gallery-link" href="../../index.html" data-no-nav>返回主题画廊</a>
+  </body>
+</html>
